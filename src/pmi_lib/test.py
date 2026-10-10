@@ -3,9 +3,9 @@ from read_nifti import read_nifti
 from pmi_viewer import view
 
 def test(image_path):
-    image_fl, spacing = read_nifti(image_path)
-    view(image_fl)
-    # write_nifti(image_fl, spacing)
+    # image_fl, spacing = read_nifti(image_path)
+    # view(image_fl, spacing = spacing, orientation='sag')
+    # write_nifti(data, spacing, file_path)
 
-test("images/ct_jaw_slice.nii.gz")
+test("images/ct_jaw.nii.gz")
 
