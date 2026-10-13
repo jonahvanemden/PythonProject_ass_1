@@ -1,4 +1,5 @@
-import pmi_lib
+import nibabel as nib
+import numpy as np
 
 def read_nifti(file_path):
     """

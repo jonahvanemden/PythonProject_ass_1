@@ -1,4 +1,6 @@
-import pmi_lib
+import nibabel as nib
+import numpy as np
+
 
 def write_nifti(data, spacing, file_path):
     """
