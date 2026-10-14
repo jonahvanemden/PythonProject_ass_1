@@ -4,47 +4,41 @@ import numpy as np
 import os
 import click
 
-def dicom_to_nifti (dicom_path, nifti_path):
+from read_dicom import read_dicom
+from write_nifti import write_nifti
+
+def convert(dicom_path, nifti_path):
     """
     Converts a DICOM file to Nifti format.
-
+    
     :param dicom_path: path of the DICOM file(s)
     :param nifti_path: path to save the converted NIFTI file
-    :returns: Nifti image object
+    :returns: None
     """
-    # todo: incorporate click for command line interface
 
-    if os.path.isfile(dicom_path):      # Single file
-
-        dicom_image = pydicom.dcmread(dicom_path)       # Read file
-        pixel_array = dicom_image.pixel_array           # Get pixel array from dicom image
-        nifti_image = nib.Nifti1Image(pixel_array, affine=np.eye(4))    # Convert to nifti image using identity matrix as affine
-        nib.save(nifti_image, nifti_path)               # Save nifti image to specified path
-        print(f"Converted {dicom_path} to {nifti_path} successfully.")
-
-        return nifti_image
-
-    elif os.path.isdir(dicom_path):      # Multiple files in directory
-        list_images = []
-        for file_name in os.listdir(dicom_path):  # Iterate over all items in path_name
-            full_name = os.path.join(dicom_path, file_name)  # Join the directory name and item name                    
-            
-            if os.path.isfile(full_name):  # Check if the item is a file. If it is, read it
-                dicom_image = pydicom.dcmread(full_name)  # Read the image
-                list_images.append(dicom_image)
-
-        list_images = sorted(list_images, key=lambda img: img.ImagePositionPatient[2])   # sort the images based on the z-coordinate of the ImagePositionPatient attribute
-        
-        list_arrays = [image.pixel_array for image in list_images]
-        pixel_array = np.stack(list_arrays, axis=-1)                # build a 3D array from the list of 2D arrays
-
-        nifti_image = nib.Nifti1Image(pixel_array, affine=np.eye(4))   # Convert to nifti image using identity matrix as affine
-        nib.save(nifti_image, nifti_path)       
-        print(f"Converted {dicom_path} to {nifti_path} successfully.")
-
-        return nifti_image
-
-    else:       # When no file or directory is found, raise an error
-        raise ValueError(f"Invalid path: {dicom_path}. Please provide a valid DICOM file or directory.")
+    data, spacing = read_dicom(dicom_path)  # read dicom file(s)
+    write_nifti(data, spacing, nifti_path)  # write nifti file
     return
 
+@click.command()
+@click.argument("dicom_path", type=click.Path(exists=True, file_okay=True), required=True)
+@click.argument("nifti_path", type=click.Path(dir_okay=False), required=True)
+
+def dicom_to_nifti(dicom_path, nifti_path):
+    """Convert DICOM_PATH (a DICOM file or a directory of DICOM files) to the NIfTI file NIFTI_PATH."""
+    try:
+        convert(dicom_path, nifti_path)
+    except pydicom.errors.InvalidDicomError:
+        raise click.ClickException(f"'{dicom_path}' is not a valid DICOM file.")
+    except FileNotFoundError as error:
+        raise click.ClickException(f"File not found: {error}")
+    except PermissionError:
+        raise click.ClickException("Permission denied while reading or writing a file.")
+    except ValueError as error:
+        raise click.ClickException(str(error))
+    except Exception:
+        raise click.ClickException("An unexpected error occurred during conversion.")
+    click.echo(f"Converted {dicom_path} to {nifti_path} successfully.")
+    return
+
+#dicom_to_nifti()  # This allows the script to be run directly from the command line
