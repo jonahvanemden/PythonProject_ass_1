@@ -40,4 +40,4 @@ def dicom_to_nifti(dicom_path, nifti_path):
     click.echo(f"Converted {dicom_path} to {nifti_path} successfully.")
     return
 
-#dicom_to_nifti()  # This allows the script to be run directly from the command line
+dicom_to_nifti()  # This allows the script to be run directly from the command line
