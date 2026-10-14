@@ -6,8 +6,6 @@ from pydicom.pixels import apply_rescale
 from pmi_viewer import view
 from pathlib import Path
 
-#assignment deel 2
-
 def get_z_position(dicom_image):
     """
     Returns the z-coordinate of the Image Position Patient DICOM attribute.
@@ -38,9 +36,6 @@ def get_spacing(dicom_list):
         ))
 
     return (dx, dy, dz)
-
-
-
 
 def read_dicom(file_path: str):
     """
@@ -113,11 +108,11 @@ def read_dicom(file_path: str):
     return data, spacing
 
     
-dicom_folder = Path(__file__).parent / "images" / "ct_jaw"
+# dicom_folder = Path(__file__).parent / "images" / "ct_jaw"
 
-data, spacing = read_dicom(str(dicom_folder))
+# data, spacing = read_dicom(str(dicom_folder))
 
-print("Shape:", data.shape)
-print("Voxel spacing:", spacing)
+# print("Shape:", data.shape)
+# print("Voxel spacing:", spacing)
 
-view(data, spacing=spacing)
+# view(data, spacing=spacing)

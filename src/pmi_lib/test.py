@@ -1,4 +1,5 @@
-import pmi_lib as pmi
+import numpy as np
+from pmi_lib import read_dicom, read_nifti, write_nifti, dicom_to_nifti, masked_gaussian_filter, convert
 from pmi_viewer import view
 
 def test(image_path):
@@ -11,11 +12,25 @@ def test(image_path):
     view(dicom_image, spacing=dicom_spacing, orientation='sag') # show
     
     nifti_path = image_path.replace('.dcm', '.nii.gz') 
-    pmi.convert(image_path, nifti_path) # dicom_to_nifty test
-    
-    image_fl, spacing = pmi.read_nifti(image_path)
-    view(image_fl, spacing = spacing, orientation='sag')
-    # pmi.write_nifti(data, spacing, file_path)
+    convert(image_path, nifti_path) # dicom_to_nifty test
 
-test("images/ct_jaw.nii.gz")
+    # Read Dicom
+    image, spacing = read_dicom(image_path)
 
+    # Read NIFTI
+    image, spacing = read_nifti(image_path)
+
+    # Write NIFTI
+    write_nifti(image, spacing, "write_nifti.nii.gz")
+
+    # Dicom to NIFTI
+    dicom_to_nifti(image_path, "converted_nifti.nii.gz")
+
+    # Masked gaussian filter
+    bool_mask = np.ones(image.shape, dtype=bool)
+    sigma = (1.0,) * image.ndim
+    image = masked_gaussian_filter(image, bool_mask, sigma)
+
+    view(image, spacing = spacing, orientation='sag')
+
+test("/Users/jonahvanemden/Desktop/PythonProject_ass_1/src/pmi_lib/images/ct_jaw_slice.dcm")

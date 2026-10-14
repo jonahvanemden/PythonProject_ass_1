@@ -15,6 +15,8 @@ def read_nifti(file_path):
     np_image = nifti_image.get_fdata()  # Store np array
 
     image_tp = np.transpose(np_image)  # Transpose for the expected display layout
+
+    #TODO Make work for slice
     image_fl = np.flip(image_tp, axis=(1,2))  # Flip across axes 1 and 2
 
     return image_fl, spacing

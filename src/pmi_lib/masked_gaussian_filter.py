@@ -1,3 +1,5 @@
+import numpy as np
+
 def masked_gaussian_filter(pixel_data, bool_mask, sigma):
     """
         Gaussian smoothing restricted to a mask: M × (G(M×I, σ) / G(M, σ)).
@@ -9,9 +11,6 @@ def masked_gaussian_filter(pixel_data, bool_mask, sigma):
         :raises ValueError: if the arguments are incompatible
     """
 
-    pixel_data = pixel_data.astype(np.float32)
-    bool_mask = bool_mask.astype(np.float32)
-
     if bool_mask.dtype != bool:
         raise ValueError(f"mask must be boolean, got dtype {bool_mask.dtype}")
     if pixel_data.shape != bool_mask.shape:
@@ -19,6 +18,8 @@ def masked_gaussian_filter(pixel_data, bool_mask, sigma):
             f"image shape {pixel_data.shape} does not match mask shape {bool_mask.shape}"
         )
 
+    pixel_data = pixel_data.astype(np.float32)
+    bool_mask = bool_mask.astype(np.float32)
 
     sigma = tuple(sigma)
 

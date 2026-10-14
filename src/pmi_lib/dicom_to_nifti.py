@@ -3,9 +3,8 @@ import nibabel as nib
 import numpy as np
 import os
 import click
-
 from read_dicom import read_dicom
-from write_nifti import write_nifti
+from pmi_lib import write_nifti
 
 def convert(dicom_path, nifti_path):
     """
