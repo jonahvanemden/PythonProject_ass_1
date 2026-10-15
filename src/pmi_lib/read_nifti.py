@@ -16,8 +16,9 @@ def read_nifti(file_path):
 
     image_tp = np.transpose(np_image)  # Transpose for the expected display layout
 
-    #TODO Make work for slice
-    image_fl = np.flip(image_tp, axis=(1,2))  # Flip across axes 1 and 2
+    if image_tp.ndim == 2:
+        image_fl = np.flip(image_tp)
+    else:
+        image_fl = np.flip(image_tp, axis=(1, 2))
 
     return image_fl, spacing
-

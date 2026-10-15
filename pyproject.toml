@@ -17,3 +17,6 @@ authors = [
   {name = 'Group member 4', email = 'member4@students.uu.nl'},
 ]
 dependencies = ["nibabel", "numpy", "pydicom"]
+
+[project.scripts]
+dicom-to-nifti = "pmi_lib.dicom_to_nifti:dicom_to_nifti"

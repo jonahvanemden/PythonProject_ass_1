@@ -3,8 +3,8 @@ import nibabel as nib
 import numpy as np
 import os
 import click
-from read_dicom import read_dicom
-from pmi_lib import write_nifti
+from .read_dicom import read_dicom
+from .write_nifti import write_nifti
 
 def convert(dicom_path, nifti_path):
     """
@@ -40,4 +40,4 @@ def dicom_to_nifti(dicom_path, nifti_path):
     click.echo(f"Converted {dicom_path} to {nifti_path} successfully.")
     return
 
-dicom_to_nifti()  # This allows the script to be run directly from the command line
+# dicom-to-nifti DICOM_PATH NIFTI_PATH  # This allows the script to be run directly from the command line

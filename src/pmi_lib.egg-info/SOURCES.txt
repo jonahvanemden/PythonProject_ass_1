@@ -5,7 +5,7 @@ pyproject.toml
 setup.py
 src/pmi_lib/.DS_Store
 src/pmi_lib/__init__.py
-src/pmi_lib/dicom_to_nifit.py
+src/pmi_lib/dicom_to_nifti.py
 src/pmi_lib/masked_gaussian_filter.py
 src/pmi_lib/read_dicom.py
 src/pmi_lib/read_nifti.py
@@ -14,6 +14,7 @@ src/pmi_lib/write_nifti.py
 src/pmi_lib.egg-info/PKG-INFO
 src/pmi_lib.egg-info/SOURCES.txt
 src/pmi_lib.egg-info/dependency_links.txt
+src/pmi_lib.egg-info/entry_points.txt
 src/pmi_lib.egg-info/requires.txt
 src/pmi_lib.egg-info/top_level.txt
 src/pmi_lib/images/.DS_Store

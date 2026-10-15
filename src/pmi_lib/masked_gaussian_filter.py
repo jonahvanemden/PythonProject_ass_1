@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.ndimage import gaussian_filter
 
 def masked_gaussian_filter(pixel_data, bool_mask, sigma):
     """
