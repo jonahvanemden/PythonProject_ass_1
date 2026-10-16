@@ -5,18 +5,18 @@ requires = ['setuptools', 'wheel']
 [project]
 name = 'pmi-lib'
 version = '0.0.1'
-description = 'PMI library - Group <group number>'
+description = 'PMI library - Group 3'
 readme = 'README.md'
 requires-python = '>=3.14'
 license = 'MIT'
 license-files = ['LICENSE.md']
 authors = [
-  {name = 'Group member 1', email = 'member1@students.uu.nl'},
-  {name = 'Group member 2', email = 'member2@students.uu.nl'},
-  {name = 'Group member 3', email = 'member3@students.uu.nl'},
-  {name = 'Group member 4', email = 'member4@students.uu.nl'},
+  {name = 'Jonah van Emden', email = 'j.vanemden1@students.uu.nl'},
+  {name = 'Teun Hofstra', email = 't.hofstra@student.tue.nl'},
+  {name = 'Kristie Poels', email = 'k.a.j.poels@student.tue.nl'},
+  {name = 'Galina Mencej', email = 'g.mencej@students.uu.nl'},
 ]
-dependencies = ["nibabel", "numpy", "pydicom"]
+dependencies = ["nibabel", "numpy", "scipy", "pydicom", "click"]
 
 [project.scripts]
 dicom-to-nifti = "pmi_lib.dicom_to_nifti:dicom_to_nifti"
