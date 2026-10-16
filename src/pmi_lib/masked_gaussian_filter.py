@@ -34,8 +34,8 @@ def masked_gaussian_filter(pixel_data, bool_mask, sigma):
 
     bool_mask = np.nan_to_num(bool_mask)
 
-    mi = np.where(pixel_data, bool_mask, 0).astype(np.float32)  # voxel-wise multiplication of pixel_data and the boolean mask
-
+    # mi = np.where(pixel_data, bool_mask, 0).astype(np.float32)  # voxel-wise multiplication of pixel_data and the boolean mask
+    mi = pixel_data * bool_mask     
     smoothed_img = gaussian_filter(mi, sigma) # gaussian smoothing of masked image
     smoothed_mask = gaussian_filter(bool_mask, sigma) # Gaussian smoothing of mask
 
