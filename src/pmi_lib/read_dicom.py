@@ -6,14 +6,14 @@ from pydicom.pixels import apply_rescale
 from pmi_viewer import view
 from pathlib import Path
 
-def get_z_position(dicom_image):
+def get_z_position(dicom_image) -> float:
     """
     Returns the z-coordinate of the Image Position Patient DICOM attribute.
     """
     return dicom_image.ImagePositionPatient[2]
 
 
-def get_spacing(dicom_list):
+def get_spacing(dicom_list) -> tuple[float, ...]:
     """" 
     calculate the pixel spacing. Slice spacing is calculated from the first slice to the last slice devided by the number of intervals.
     """
@@ -37,7 +37,7 @@ def get_spacing(dicom_list):
 
     return (dx, dy, dz)
 
-def read_dicom(file_path: str):
+def read_dicom(file_path: str) -> np.ndarray:
     """
     Reads a single DICOM file or a directory of DICOM files.
 
@@ -107,12 +107,3 @@ def read_dicom(file_path: str):
 
     return data, spacing
 
-    
-# dicom_folder = Path(__file__).parent / "images" / "ct_jaw"
-
-# data, spacing = read_dicom(str(dicom_folder))
-
-# print("Shape:", data.shape)
-# print("Voxel spacing:", spacing)
-
-# view(data, spacing=spacing)
