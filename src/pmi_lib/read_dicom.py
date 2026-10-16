@@ -105,5 +105,7 @@ def read_dicom(file_path: str) -> np.ndarray:
 
     spacing = get_spacing(dicom_list)
 
-    return data, spacing
+    metadata = {item.keyword: item.value for item in dicom_list[0] if item.keyword and item.keyword != 'PixelData'}
+
+    return data, spacing, metadata
 
