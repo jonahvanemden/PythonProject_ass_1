@@ -42,4 +42,4 @@ def masked_gaussian_filter(pixel_data, bool_mask, sigma):
     ratio = np.zeros_like(smoothed_img)
     np.divide(smoothed_img,smoothed_mask, out=ratio, where=smoothed_mask>0) # ratio of gaussian smoothing between masked image and mask
 
-    return bool_mask*ratio
+    return np.where(bool_mask > 0, ratio, pixel_data)
