@@ -27,16 +27,6 @@ class image:
         # Calculate voxel volume in mm³
         return self.spacing[0] * self.spacing[1] * self.spacing[2]
 
-class DicomImage(image):
-    def __init__(self, data, spacing, metadata):
-        super().__init__(data, spacing)
-
-        if not isinstance(metadata, dict):
-            raise ValueError("Metadata must be a dictionary.")
-
-        self.metadata = metadata
-
-
 # Example
 
 data = np.zeros((10, 20, 30)) 
