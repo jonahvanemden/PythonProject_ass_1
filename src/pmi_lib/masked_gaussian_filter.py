@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.ndimage import gaussian_filter
 
-def masked_gaussian_filter(pixel_data, bool_mask, sigma):
+def masked_gaussian_filter(pixel_data, bool_mask, sigma) -> np.ndarray:
     """
         Gaussian smoothing restricted to a mask: M × (G(M×I, σ) / G(M, σ)).
 

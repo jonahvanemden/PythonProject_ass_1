@@ -6,7 +6,7 @@ import click
 from .read_dicom import read_dicom
 from .write_nifti import write_nifti
 
-def convert(dicom_path, nifti_path):
+def convert(dicom_path, nifti_path) -> None:
     """
     Converts a DICOM file to Nifti format.
     

@@ -37,7 +37,7 @@ def get_spacing(dicom_list) -> tuple[float, ...]:
 
     return (dx, dy, dz)
 
-def read_dicom(file_path: str) -> np.ndarray:
+def read_dicom(file_path: str) -> tuple[np.ndarray, tuple[float, ...] , dict]:
     """
     Reads a single DICOM file or a directory of DICOM files.
 

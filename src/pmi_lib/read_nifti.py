@@ -1,7 +1,7 @@
 import nibabel as nib
 import numpy as np
 
-def read_nifti(file_path):
+def read_nifti(file_path) -> tuple[np.ndarray, tuple[float, ...]]:
     """
     Reads a Nifti file and returns a the data.
 
