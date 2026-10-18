@@ -23,7 +23,7 @@ def convert(dicom_path, nifti_path) -> None:
 @click.argument("dicom_path", type=click.Path(exists=True, file_okay=True), required=True)
 @click.argument("nifti_path", type=click.Path(dir_okay=False), required=True)
 
-def dicom_to_nifti(dicom_path, nifti_path):
+def dicom_to_nifti(dicom_path, nifti_path) -> None:
     """Convert DICOM_PATH (a DICOM file or a directory of DICOM files) to the NIfTI file NIFTI_PATH."""
     try:
         convert(dicom_path, nifti_path)

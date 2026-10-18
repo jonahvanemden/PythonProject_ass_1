@@ -2,7 +2,7 @@ import nibabel as nib
 import numpy as np
 
 
-def write_nifti(data, spacing, file_path):
+def write_nifti(data, spacing, file_path) -> None:
     """
     Saves a 3D array as a NIfTI-1 image.
 
@@ -43,4 +43,3 @@ def write_nifti(data, spacing, file_path):
 
     nib.nifti1.save(nf_image, file_path)
     print(f"Saved NIfTI image to {file_path} successfully.")
-    return
