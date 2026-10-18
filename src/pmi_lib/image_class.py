@@ -1,14 +1,13 @@
 import numpy as np
 
 class image: 
-    def __init__(self, data, spacing):
+    def __init__(self, data : np.ndarray, spacing : tuple[float, ...]):
         self.data=np.asarray(data)
         self.spacing=tuple(float(s) for s in spacing)
 
         if len(self.spacing) != self.data.ndim:
             raise ValueError("Data and spacing are not compatible.")
 
-    
     def __str__(self) -> str:  
         return (
             f"A {self.data.dtype} image with shape {self.data.shape} "
@@ -17,19 +16,19 @@ class image:
     def get_pixel_area(self) -> float:
         if self.data.ndim <2:
             raise ValueError("Image must have at least 2 dimensions.")
-        # Calculate pixel area in mm²
+        # Calculate pixel area in mm^2
         return self.spacing[0] * self.spacing[1]
     
     def get_voxel_volume(self) -> float:
         if self.data.ndim <3:
             raise ValueError("Image must have at least 3 dimensions.")
         
-        # Calculate voxel volume in mm³
+        # Calculate voxel volume in mm^3
         return self.spacing[0] * self.spacing[1] * self.spacing[2]
 
-data = np.zeros((10, 20, 30)) 
-spacing = (1, 0.5, 2)  
+# data = np.zeros((10, 20, 30)) 
+# spacing = (1, 0.5, 2)  
 
-image = image(data, spacing)  
+# image = image(data, spacing)  
 
-print(image)  
+# print(image)  

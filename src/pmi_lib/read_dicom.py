@@ -1,19 +1,20 @@
 import os
 import nibabel as nib
 import numpy as np
+import pydicom
 from pydicom import dcmread
 from pydicom.pixels import apply_rescale
 from pmi_viewer import view
 from pathlib import Path
 
-def get_z_position(dicom_image) -> float:
+def get_z_position(dicom_image : pydicom.dataset.Dataset) -> float:
     """
     Returns the z-coordinate of the Image Position Patient DICOM attribute.
     """
     return dicom_image.ImagePositionPatient[2]
 
 
-def get_spacing(dicom_list) -> tuple[float, ...]:
+def get_spacing(dicom_list : list[pydicom.dataset.Dataset]) -> tuple[float, ...]:
     """" 
     calculate the pixel spacing. Slice spacing is calculated from the first slice to the last slice devided by the number of intervals.
     """
@@ -108,4 +109,3 @@ def read_dicom(file_path: str) -> tuple[np.ndarray, tuple[float, ...] , dict]:
     metadata = {item.keyword: item.value for item in dicom_list[0] if item.keyword and item.keyword != 'PixelData'}
 
     return data, spacing, metadata
-

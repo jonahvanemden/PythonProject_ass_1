@@ -2,7 +2,7 @@ import nibabel as nib
 import numpy as np
 
 
-def write_nifti(data, spacing, file_path) -> None:
+def write_nifti(data : np.ndarray, spacing : tuple[float, ...], file_path : str) -> None:
     """
     Saves a 3D array as a NIfTI-1 image.
 
