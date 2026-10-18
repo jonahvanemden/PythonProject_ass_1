@@ -1,8 +1,9 @@
 import nibabel as nib
 import numpy as np
+from pmi_lib.image_class import Image
 
 
-def write_nifti(data : np.ndarray, spacing : tuple[float, ...], file_path : str) -> None:
+def write_nifti(image : Image, file_path : str) -> None:
     """
     Saves a 3D array as a NIfTI-1 image.
 
@@ -12,6 +13,10 @@ def write_nifti(data : np.ndarray, spacing : tuple[float, ...], file_path : str)
     
     returns: None
     """
+
+    data = image.data
+    spacing = image.spacing
+
     try:  # Try to convert the input data to an numpy array
         data = np.asarray(data)
     except (TypeError, ValueError) as error:  # If the input data can't be converted raise value error

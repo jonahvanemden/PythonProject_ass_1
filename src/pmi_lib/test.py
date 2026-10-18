@@ -32,4 +32,6 @@ def test(image_path):
 
 test("src/pmi_lib/images/ct_jaw")
 
-#TODO API hide helper functions, good comments + docstrings, Readme.md file update 
+#TODO API hide helper functions, good comments + docstrings, Readme.md file update
+
+#TODO test all new class updated functions again

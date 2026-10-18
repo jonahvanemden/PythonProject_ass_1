@@ -1,16 +1,20 @@
 import numpy as np
+from pmi_lib.image_class import Image
 from scipy.ndimage import gaussian_filter
 
-def masked_gaussian_filter(pixel_data : np.ndarray, bool_mask : np.ndarray, sigma : tuple[float, ...]) -> np.ndarray:
+def masked_gaussian_filter(image : Image, bool_mask : np.ndarray, sigma : tuple[float, ...]) -> Image:
     """
         Gaussian smoothing restricted to a mask: M × (G(M×I, σ) / G(M, σ)).
 
         :param pixel_data: A NumPy array of image pixel data
         :param bool_mask: A boolean NumPy array with same shape as pixel_data
-        :param sigma: standard deviation of the gaussian filter sigma (a tuple of floats)
+        :param sigma: standard deviation of the gaussian filter sigma in mm(a tuple of floats)
         :returns: float32 NumPy array, same shape as pixel_data, zero outside the mask
         :raises ValueError: if the arguments are incompatible
     """
+
+    pixel_data = image.data
+    spacing = image.spacing
 
     if bool_mask.dtype != bool:
         raise ValueError(f"mask must be boolean, got dtype {bool_mask.dtype}")
@@ -36,10 +40,13 @@ def masked_gaussian_filter(pixel_data : np.ndarray, bool_mask : np.ndarray, sigm
 
     # mi = np.where(pixel_data, bool_mask, 0).astype(np.float32)  # voxel-wise multiplication of pixel_data and the boolean mask
     mi = pixel_data * bool_mask     
-    smoothed_img = gaussian_filter(mi, sigma) # gaussian smoothing of masked image
-    smoothed_mask = gaussian_filter(bool_mask, sigma) # Gaussian smoothing of mask
+
+    sigma_voxels = tuple(s_mm / spacing_mm for s_mm, spacing_mm in zip(sigma, image.spacing)) # convert sigma from millimeters to pixels for each image axis
+    
+    smoothed_img = gaussian_filter(mi, sigma_voxels) # gaussian smoothing of masked image
+    smoothed_mask = gaussian_filter(bool_mask, sigma_voxels) # Gaussian smoothing of mask
 
     ratio = np.zeros_like(smoothed_img)
     np.divide(smoothed_img,smoothed_mask, out=ratio, where=smoothed_mask>0) # ratio of gaussian smoothing between masked image and mask
 
-    return np.where(bool_mask > 0, ratio, pixel_data)
+    return Image(np.where(bool_mask > 0, ratio, pixel_data), spacing)

@@ -1,7 +1,8 @@
 import nibabel as nib
 import numpy as np
+from pmi_lib.image_class import Image
 
-def read_nifti(file_path :str) -> tuple[np.ndarray, tuple[float, ...]]:
+def read_nifti(file_path :str) -> Image:
     """
     Reads a Nifti file and returns a the data.
 
@@ -21,4 +22,4 @@ def read_nifti(file_path :str) -> tuple[np.ndarray, tuple[float, ...]]:
     else:
         image_fl = np.flip(image_tp, axis=(1, 2))
 
-    return image_fl, spacing
+    return Image(image_fl, spacing)

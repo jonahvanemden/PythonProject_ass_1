@@ -6,6 +6,8 @@ from pydicom import dcmread
 from pydicom.pixels import apply_rescale
 from pmi_viewer import view
 from pathlib import Path
+from pmi_lib.image_class import Image
+from pmi_lib.dicom_class import DicomImage
 
 def get_z_position(dicom_image : pydicom.dataset.Dataset) -> float:
     """
@@ -38,7 +40,7 @@ def get_spacing(dicom_list : list[pydicom.dataset.Dataset]) -> tuple[float, ...]
 
     return (dx, dy, dz)
 
-def read_dicom(file_path: str) -> tuple[np.ndarray, tuple[float, ...] , dict]:
+def read_dicom(file_path: str) -> DicomImage:
     """
     Reads a single DICOM file or a directory of DICOM files.
 
@@ -108,4 +110,4 @@ def read_dicom(file_path: str) -> tuple[np.ndarray, tuple[float, ...] , dict]:
 
     metadata = {item.keyword: item.value for item in dicom_list[0] if item.keyword and item.keyword != 'PixelData'}
 
-    return data, spacing, metadata
+    return DicomImage(data, spacing, metadata)

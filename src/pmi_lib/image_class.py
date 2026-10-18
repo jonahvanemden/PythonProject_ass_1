@@ -1,6 +1,6 @@
 import numpy as np
 
-class image: 
+class Image: 
     def __init__(self, data : np.ndarray, spacing : tuple[float, ...]):
         self.data=np.asarray(data)
         self.spacing=tuple(float(s) for s in spacing)
@@ -29,6 +29,6 @@ class image:
 # data = np.zeros((10, 20, 30)) 
 # spacing = (1, 0.5, 2)  
 
-# image = image(data, spacing)  
+# image = Image(data, spacing)  
 
 # print(image)  
