@@ -13,7 +13,7 @@ def masked_gaussian_filter(image : Image, bool_mask : np.ndarray, sigma : tuple[
         :raises ValueError: if the arguments are incompatible
     """
 
-    pixel_data = image.data
+    pixel_data = image._data
     spacing = image.spacing
 
     if bool_mask.dtype != bool:

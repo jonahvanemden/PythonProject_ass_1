@@ -8,13 +8,12 @@ def write_nifti(image : Image, file_path : str) -> None:
     Saves a 3D array as a NIfTI-1 image.
 
     :param data: 3D image data to save
-    :param spacing: Voxel spacing values
     :param file_path: Destination path for the NIfTI file
     
-    returns: None
+    returns: NifTI image object
     """
 
-    data = image.data
+    data = image._data
     spacing = image.spacing
 
     try:  # Try to convert the input data to an numpy array
@@ -48,3 +47,4 @@ def write_nifti(image : Image, file_path : str) -> None:
 
     nib.nifti1.save(nf_image, file_path)
     print(f"Saved NIfTI image to {file_path} successfully.")
+    return nf_image

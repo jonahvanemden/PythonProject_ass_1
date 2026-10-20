@@ -12,19 +12,23 @@ def convert(dicom_path : str, nifti_path : str) -> None:
     
     :param dicom_path: path of the DICOM file(s)
     :param nifti_path: path to save the converted NIFTI file
-    :returns: None
+    :returns: NifTI image object
     """
 
-    data, spacing = read_dicom(dicom_path)  # read dicom file(s)
-    write_nifti(data, spacing, nifti_path)  # write nifti file
-    return
+    dicom_image = read_dicom(dicom_path)  # read dicom file(s)
+    nf_image = write_nifti(dicom_image, nifti_path)  # write nifti file
+    return nf_image
 
 @click.command()
 @click.argument("dicom_path", type=click.Path(exists=True, file_okay=True), required=True)
 @click.argument("nifti_path", type=click.Path(dir_okay=False), required=True)
 
 def dicom_to_nifti(dicom_path : str, nifti_path : str) -> None:
-    """Convert DICOM_PATH (a DICOM file or a directory of DICOM files) to the NIfTI file NIFTI_PATH."""
+    """Convert DICOM_PATH (a DICOM file or a directory of DICOM files) to the NIfTI file NIFTI_PATH.
+    :param dicom_path: path of the DICOM file(s)
+    :param nifti_path: path to save the converted NIFTI file
+    :returns: None
+    """
     try:
         convert(dicom_path, nifti_path)
     except pydicom.errors.InvalidDicomError:
@@ -40,4 +44,3 @@ def dicom_to_nifti(dicom_path : str, nifti_path : str) -> None:
     click.echo(f"Converted {dicom_path} to {nifti_path} successfully.")
     return
 
-# dicom-to-nifti DICOM_PATH NIFTI_PATH  # This allows the script to be run directly from the command line

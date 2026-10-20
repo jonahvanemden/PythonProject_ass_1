@@ -11,9 +11,4 @@ class DicomImage(Image):
 
         self.metadata = metadata
 
-data = np.zeros((10, 20, 30)) 
-spacing = (1, 0.5, 2)  
-metadata = dict()
 
-image = DicomImage(data, spacing, metadata)
-print(image)

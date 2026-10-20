@@ -44,12 +44,6 @@ class Image:
 
     def __getitem__(self, key: Any) -> np.ndarray:
         # enables data indexing
-        return self.data[key]
+        return self._data[key]
         
 
-# data = np.zeros((10, 20, 30)) 
-# spacing = (1, 0.5, 2)  
-
-# image = Image(data, spacing)  
-
-# print(image)  
