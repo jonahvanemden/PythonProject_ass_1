@@ -1,4 +1,5 @@
 import numpy as np
+from typing import Any
 
 class Image: 
     def __init__(self, data : np.ndarray, spacing : tuple[float, ...]):
