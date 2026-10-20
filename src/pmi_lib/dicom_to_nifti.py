@@ -2,6 +2,7 @@ import pydicom
 import click
 from .read_dicom import read_dicom
 from .write_nifti import write_nifti
+import nibabel as nib
 
 def convert(dicom_path : str, nifti_path : str) -> nib.Nifti1Image:
     """
