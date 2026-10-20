@@ -26,7 +26,7 @@ class Image:
         # Calculate voxel volume in mm^3
         return self.spacing[0] * self.spacing[1] * self.spacing[2]
 
-    def __len__(self) -> int
+    def __len__(self) -> int:
         # return the size of the outer dim
         return self._data.shape[0]
 
@@ -35,13 +35,13 @@ class Image:
         dtype: np.typing.DTypeLike | None = None, 
         *, 
         copy: bool | None = None
-    ) -> np.ndarray
+    ) -> np.ndarray:
         #  return the pixel data with the specified pixel data type
         if dtype is None: 
             dtype = self._data.dtype
         return self._data.astype(dtype, copy=copy)
 
-    def __getitem__(self, key: Any) -> np.ndarray 
+    def __getitem__(self, key: Any) -> np.ndarray:
         # enables data indexing
         return data[key]
         
