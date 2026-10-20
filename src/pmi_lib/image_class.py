@@ -43,7 +43,7 @@ class Image:
 
     def __getitem__(self, key: Any) -> np.ndarray:
         # enables data indexing
-        return data[key]
+        return self.data[key]
         
 
 # data = np.zeros((10, 20, 30)) 
