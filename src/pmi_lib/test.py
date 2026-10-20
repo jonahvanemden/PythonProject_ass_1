@@ -4,6 +4,7 @@ from pmi_viewer import view
 from pathlib import Path
 from click.testing import CliRunner
 from pmi_lib.dicom_to_nifti import convert, dicom_to_nifti
+from pmi_lib.image_class import Image
 
 dicom_path = "src/pmi_lib/images/ct_jaw"
 
@@ -88,7 +89,7 @@ def test_image_class() -> None:
        data = np.zeros((10, 20, 30))
        image = Image(data, spacing=(1, 0.5, 2))
        print(image)
-       print("Default spacing:", Image(data).spacing)
+       print("Default spacing:", Image(data, spacing=(1.0, 1.0, 1.0)).spacing)
        print("Voxel volume:", image.get_voxel_volume())
        print("Pixel area:", Image(np.zeros((4, 5)), (0.5, 2)).get_pixel_area())
        assert len(image) == 10 and np.shape(image) == (10, 20, 30) and np.ndim(image) == 3
@@ -107,3 +108,4 @@ def test_image_class() -> None:
 dicom_image, image_gaussian = test(dicom_path)
 test_cli(dicom_path)
 view_test_images(dicom_image, image_gaussian)
+test_image_class()
