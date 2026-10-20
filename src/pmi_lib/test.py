@@ -1,8 +1,14 @@
 import numpy as np
-from pmi_lib import read_dicom, read_nifti, write_nifti, dicom_to_nifti, masked_gaussian_filter, convert
+from pmi_lib import read_dicom, read_nifti, write_nifti, dicom_to_nifti, masked_gaussian_filter
 from pmi_viewer import view
 from pathlib import Path
 from click.testing import CliRunner
+from pmi_lib.dicom_to_nifti import convert, dicom_to_nifti
+
+dicom_path = "src/pmi_lib/images/ct_jaw"
+
+def print_success(test_name):
+    print(f"  [PASS] {test_name}")
 
 def test(image_path):
     """
@@ -14,36 +20,40 @@ def test(image_path):
     # read_dicom test
     dicom_image = read_dicom(image_path)
     print("DICOM image:", dicom_image)
-    print("Read DICOM test completed.")
+    print_success("Read DICOM")
+
+    #read_nifti test
+    nifti_image = read_nifti("src/pmi_lib/images/segment_1.nii.gz")
+    print("NIfTI image:", nifti_image)
+    print_success("Read NIfTI")
 
     # write nifti test: save file in pmi_lib/images
     output_path = Path(__file__).parent / "images" / "write_nifti_test.nii.gz"
     write_nifti(dicom_image, str(output_path))
-    print("Write NIfTI test completed.")
+    print_success("Write NIfTI")
 
     # dicom_to_nifti test 
     output_path = Path(__file__).parent / "images" / "dicom_to_nifti_test.nii.gz"
     convert(image_path, str(output_path))
-    print("DICOM to NIfTI conversion test completed.")
+    print_success("DICOM to NIfTI conversion")
 
     # Masked gaussian filter
     bool_mask = np.ones(dicom_image._data.shape, dtype=bool)
     sigma = (5.0,) * dicom_image._data.ndim
     image_gaussian = masked_gaussian_filter(dicom_image, bool_mask, sigma)
 
-    print("Masked Gaussian filter test completed.")
+    print_success("Masked Gaussian Filter")
     
     return dicom_image, image_gaussian
 
 
-def view_test_images (image_path):
+def view_test_images (dicom_image, image_gaussian):
     """
     View the DICOM image and the Gaussian filtered image.
-    :param image_path: Path to the DICOM image file
+    :param dicom_image: The original DICOM image
+    :param image_gaussian: The Gaussian filtered image
     :returns: None
     """
-
-    dicom_image, image_gaussian = test(image_path)
     view(dicom_image, spacing=dicom_image.spacing, orientation="sag")
     view(image_gaussian, spacing=dicom_image.spacing, orientation="sag")
 
@@ -69,10 +79,31 @@ def test_cli(image_path):
 
     # Check the success message
     assert "Converted" in result.output
-    print("CLI test passed.")
+    print_success("DICOM to NIfTI CLI conversion")
     return
 
 
-test("src/pmi_lib/images/ct_jaw")
-test_cli("src/pmi_lib/images/ct_jaw")
-view_test_images("src/pmi_lib/images/ct_jaw")
+def test_image_class() -> None:
+       """Test the Image and DicomImage classes."""
+       data = np.zeros((10, 20, 30))
+       image = Image(data, spacing=(1, 0.5, 2))
+       print(image)
+       print("Default spacing:", Image(data).spacing)
+       print("Voxel volume:", image.get_voxel_volume())
+       print("Pixel area:", Image(np.zeros((4, 5)), (0.5, 2)).get_pixel_area())
+       assert len(image) == 10 and np.shape(image) == (10, 20, 30) and np.ndim(image) == 3
+       assert image[0].shape == (20, 30) and np.asarray(image, dtype=np.float32).dtype == np.float32
+
+       for error, args in [(ValueError, (data, (1.0, 1.0))), (TypeError, ([1, 2],)), (TypeError, (data, 1.0))]:
+           try:
+               Image(*args)
+           except error:
+               pass
+           else:
+               raise AssertionError(f"Image{args} should raise {error.__name__}")
+       print_success("Image class")
+
+
+dicom_image, image_gaussian = test(dicom_path)
+test_cli(dicom_path)
+view_test_images(dicom_image, image_gaussian)

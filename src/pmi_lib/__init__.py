@@ -1,4 +1,3 @@
-from .dicom_to_nifti import dicom_to_nifti, convert
 from .masked_gaussian_filter import masked_gaussian_filter
 from .read_dicom import get_spacing, get_z_position, read_dicom
 from .read_nifti import read_nifti
