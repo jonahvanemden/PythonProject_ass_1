@@ -40,7 +40,7 @@ def test(image_path):
 
     # Masked gaussian filter
     bool_mask = np.ones(dicom_image._data.shape, dtype=bool)
-    sigma = (5.0,) * dicom_image._data.ndim
+    sigma = (1.0,) * dicom_image._data.ndim
     image_gaussian = masked_gaussian_filter(dicom_image, bool_mask, sigma)
 
     print_success("Masked Gaussian Filter")
@@ -56,7 +56,7 @@ def view_test_images (dicom_image, image_gaussian):
     :returns: None
     """
     view(dicom_image, spacing=dicom_image.spacing, orientation="sag")
-    view(image_gaussian, spacing=dicom_image.spacing, orientation="sag")
+    view(image_gaussian, spacing=dicom_image.spacing)
 
     return
 
