@@ -16,7 +16,7 @@ authors = [
   {name = 'Kristie Poels', email = 'k.a.j.poels@student.tue.nl'},
   {name = 'Galina Mencej', email = 'g.mencej@students.uu.nl'},
 ]
-dependencies = ["nibabel", "numpy", "scipy", "pydicom", "click"]
+dependencies = ["nibabel", "numpy", "scipy", "pydicom", "click", "pmi-viewer"]
 
 [project.scripts]
 dicom-to-nifti = "pmi_lib.dicom_to_nifti:dicom_to_nifti"
