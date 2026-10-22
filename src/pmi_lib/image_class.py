@@ -15,12 +15,18 @@ class Image:
             f"and a spacing of {self.spacing} mm."
         )  
     def get_pixel_area(self) -> float:
+        """
+        Return the pixel area in square millimetres
+        """
         if self._data.ndim <2:
             raise ValueError("Image must have at least 2 dimensions.")
         # Calculate pixel area in mm^2
         return self.spacing[0] * self.spacing[1]
     
     def get_voxel_volume(self) -> float:
+        """
+        Return the voxel volume in cubic millimetres
+        """
         if self._data.ndim <3:
             raise ValueError("Image must have at least 3 dimensions.")
         
@@ -46,4 +52,3 @@ class Image:
         # enables data indexing
         return self._data[key]
         
-
